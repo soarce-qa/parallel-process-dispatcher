@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "FastBill\\ParallelProcessDispatcher\\": "src/FastBill/ParallelProcessDispatcher"
+            "FastBill\\ParallelProcessDispatcher\\": "src/"
         }
     },
     "require-dev": {
