@@ -10,8 +10,13 @@
         }
     ],
     "readme": "README.md",
+    "config": {
+        "platform": {
+            "php": "5.3.9"
+        }
+    },
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.3"
     },
     "autoload": {
         "psr-4": {
@@ -19,13 +24,13 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "*",
+        "phpunit/phpunit": "^4.8",
         "jakub-onderka/php-parallel-lint": "*",
-        "phploc/phploc": "*",
-        "pdepend/pdepend": "*",
+        "phploc/phploc": "^2.1",
+        "pdepend/pdepend": "^2.5",
         "phpmd/phpmd": "*",
         "squizlabs/php_codesniffer": "*",
-        "sebastian/phpcpd": "*",
-        "theseer/phpdox": "*"
+        "sebastian/phpcpd": "^2.0",
+        "theseer/phpdox": "0.8.1.1"
     }
 }
