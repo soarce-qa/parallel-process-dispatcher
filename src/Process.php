@@ -61,11 +61,11 @@ class Process
 	 */
 	public function start($stdInInput = null)
 	{
-		$descriptors = [
+		$descriptors = array(
 			self::STDIN  => array('pipe', self::READ),
 			self::STDOUT => array('pipe', self::WRITE),
 			self::STDERR => array('pipe', self::WRITE),
-		];
+        );
 
 		$this->process = proc_open(
 			$this->command,
@@ -73,7 +73,7 @@ class Process
 			$pipes,
 			null,
 			null,
-			['bypass_shell' => true]
+			array('bypass_shell' => true)
 		);
 
 		if ($this->process === false) {

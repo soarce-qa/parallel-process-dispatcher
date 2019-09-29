@@ -5,13 +5,13 @@ namespace FastBill\ParallelProcessDispatcher;
 class Dispatcher
 {
 	/** @var Process[] */
-	private $processQueue = [];
+	private $processQueue = array();
 
 	/** @var Process[] */
-	private $runningProcesses = [];
+	private $runningProcesses = array();
 
 	/** @var Process[] */
-	private $finishedProcesses = [];
+	private $finishedProcesses = array();
 
 	/** @var int number of maximum parallel running processes */
 	private $maxProcesses = 2;
@@ -95,7 +95,7 @@ class Dispatcher
 	protected function checkAndRemoveFinishedProcessesFromStack()
 	{
 		// check all running processes if they are still running,
-		$finishedProcIds = [];
+		$finishedProcIds = array();
 		foreach ($this->runningProcesses as $key => $runningProc) {
 			// if one is finished, move to finishedProcesses
 			if ($runningProc->isFinished()) {
