@@ -27,16 +27,21 @@ class ProcessLineOutput extends Process
 			return true;
 		}
 
+		echo 'y';
+
 		$status = proc_get_status($this->process);
+		echo 'z';
 
 		if ($status['running']) {
+		    echo 'a';
 			if (! $this->nonblockingMode) {
 				stream_set_blocking($this->stdout, false);
 				stream_set_blocking($this->stderr, false);
 				$this->nonblockingMode = true;
 			}
-
+            echo 'b';
             $this->readOutputIntoArray();
+            echo 'k';
             $this->errorOutput .= stream_get_contents($this->stderr);
 			return false;
 		}
@@ -95,14 +100,25 @@ class ProcessLineOutput extends Process
      */
     private function readOutputIntoArray()
     {
-        while (!feof($this->stdout)) {
-            $temp = fgets($this->stdout);
-            if (substr($temp, -1) === "\n") {
-                $this->output[] = $this->remainder . $temp;
-                $this->remainder = '';
-            } else {
-                $this->remainder .= $temp;
-            }
+        echo "c";
+        $temp = stream_get_contents($this->stdout);
+        echo "d";
+        if ($temp === '') {
+            return;
+        }
+        echo "e";
+
+        $tempArr = explode("\n", $temp);
+        if (count($tempArr) === 1) {
+            $this->remainder .= $tempArr[0];
+            return;
+        }
+
+        $this->output[] = $this->remainder . array_shift($tempArr);
+        $this->remainder = array_pop($tempArr);
+
+        foreach ($tempArr as $row) {
+            $this->output[] = $row;
         }
     }
 }
