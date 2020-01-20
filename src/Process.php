@@ -34,16 +34,16 @@ class Process
 	protected $stderr = null;
 
 	/** @var string */
-	private $output = '';
+	protected $output = '';
 
 	/** @var string */
-	private $errorOutput = '';
+	protected $errorOutput = '';
 
 	/** @var int */
-	private $statusCode = null;
+	protected $statusCode;
 
 	/** @var string */
-	private $name = '';
+	protected $name;
 
 	/**
 	 * @param string $command
