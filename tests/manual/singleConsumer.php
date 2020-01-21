@@ -11,11 +11,11 @@ $job->start();
 
 echo 'x';
 
-while (!$job->isFinished()) {
+do {
     while ($job->hasNextOutput()) {
         echo $job->getNextOutput() . "\n";
     }
     echo "xxx --- done with batch, sleeping a sec.\n";
     sleep(1);
-}
+} while (!$job->isFinished() || $job->hasNextOutput());
 

@@ -1,6 +1,6 @@
 <?php
 
-$iterations = $argv[1] ?? 100;
+$iterations = $argv[1] ?? 10;
 
 for ($i = 0; $i < $iterations; $i++) {
     echo "this is ";
@@ -10,3 +10,4 @@ for ($i = 0; $i < $iterations; $i++) {
         usleep(mt_rand(100000, 1400000));
     }
 }
+#echo "\n";
