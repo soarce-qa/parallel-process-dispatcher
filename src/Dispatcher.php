@@ -13,6 +13,9 @@ class Dispatcher
 	/** @var Process[] */
 	private $finishedProcesses = [];
 
+	/** @var Process[] */
+    private $finishedProcessesWithOutput = [];
+
 	/** @var int number of maximum parallel running processes */
 	private $maxProcesses = 2;
 
@@ -101,6 +104,7 @@ class Dispatcher
 			if ($runningProc->isFinished()) {
 				$finishedProcIds[] = $key;
 				$this->finishedProcesses[] = $runningProc;
+				$this->finishedProcessesWithOutput[] = $runningProc;
 			}
 		}
 
@@ -130,6 +134,21 @@ class Dispatcher
 		}
 	}
 
+    /**
+     * @return \Generator
+     */
+	public function getProcessesWithPendingOutput()
+    {
+        while ($this->finishedProcessesWithOutput !== []) {
+            yield array_shift($this->finishedProcessesWithOutput);
+        }
+        foreach ($this->runningProcesses as $process) {
+            if (($process instanceof ProcessLineOutput) && $process->hasNextOutput()) {
+                yield $process;
+            }
+        }
+    }
+
 	/**
 	 * This lets the running processes finish after the main program went through.
 	 */
@@ -137,5 +156,4 @@ class Dispatcher
 	{
 		$this->dispatch();
 	}
-
 }

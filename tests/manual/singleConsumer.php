@@ -9,8 +9,6 @@ $fullPath = __DIR__ . '/outputLines.php';
 $job = new ProcessLineOutput("php -f $fullPath", "whatever");
 $job->start();
 
-echo 'x';
-
 do {
     while ($job->hasNextOutput()) {
         echo $job->getNextOutput() . "\n";
