@@ -135,7 +135,7 @@ class Dispatcher
 	}
 
     /**
-     * @return \Generator
+     * @return \Generator|Process[]
      */
 	public function getProcessesWithPendingOutput()
     {

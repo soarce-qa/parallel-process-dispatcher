@@ -14,11 +14,19 @@ class OutputAggregator {
 
     public function getOutput()
     {
-        // foreach over the jobs that have ouput (-> ProcessLineOutput) or are finished (->Process)
+        $this->dispatcher->tick();
 
-        // somehow remember the finished and processed ones to not iterate each time.
-
-        // yield processname -> line of the log. This means re-using array keys, but it's fun! :D
+        foreach ($this->dispatcher->getProcessesWithPendingOutput() as $process) {
+            if ($process instanceof ProcessLineOutput) {
+                while ($process->hasNextOutput()) {
+                    yield $process->getName() => $process->getNextOutput();
+                }
+            } else {
+                foreach (explode("\n", $process->getOutput()) as $line) {
+                    yield $process->getName() => $line . "\n";
+                }
+            }
+        }
 
         yield;
     }

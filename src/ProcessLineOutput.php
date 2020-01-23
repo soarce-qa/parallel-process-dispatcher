@@ -73,7 +73,7 @@ class ProcessLineOutput extends Process
 	 */
 	public function getOutput()
 	{
-		throw new \RuntimeException("Cannot get output in total, use (get|has)NextOutput()");
+		throw new \RuntimeException('Cannot get output in total, use (get|has)NextOutput()');
 	}
 
     /**
@@ -120,11 +120,11 @@ class ProcessLineOutput extends Process
             return;
         }
 
-        $this->output[] = $this->remainder . array_shift($tempArr);
+        $this->output[] = $this->remainder . array_shift($tempArr) . "\n";
         $this->remainder = array_pop($tempArr);
 
         foreach ($tempArr as $row) {
-            $this->output[] = $row;
+            $this->output[] = $row . "\n";
         }
     }
 }
