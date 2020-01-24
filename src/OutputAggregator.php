@@ -18,18 +18,23 @@ class OutputAggregator {
 
         while ($this->dispatcher->hasRunningProcesses()) {
             $this->dispatcher->tick();
-            foreach ($this->dispatcher->getProcessesWithPendingOutput() as $process) {
-                if ($process instanceof ProcessLineOutput) {
-                    while ($process->hasNextOutput()) {
-                        yield $process->getName() => $process->getNextOutput();
-                    }
-                } else {
-                    foreach (explode("\n", $process->getOutput()) as $line) {
-                        yield $process->getName() => $line . "\n";
-                    }
+            yield from $this->processOneIteration();
+        }
+        yield from $this->processOneIteration();
+    }
+
+    private function processOneIteration()
+    {
+        foreach ($this->dispatcher->getProcessesWithPendingOutput() as $process) {
+            if ($process instanceof ProcessLineOutput) {
+                while ($process->hasNextOutput()) {
+                    yield $process->getName() => $process->getNextOutput();
+                }
+            } else {
+                foreach (explode("\n", $process->getOutput()) as $line) {
+                    yield $process->getName() => $line . "\n";
                 }
             }
         }
     }
-
 }
