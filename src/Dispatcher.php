@@ -16,6 +16,9 @@ class Dispatcher
 	/** @var Process[] */
     private $finishedProcessesWithOutput = [];
 
+    /** @var bool if set to false, finished processes will not be moved to "finishedProcesses* stack. */
+    private $preserveFinishedProcesses = true;
+
 	/** @var int number of maximum parallel running processes */
 	private $maxProcesses = 2;
 
@@ -26,6 +29,14 @@ class Dispatcher
 		}
 		$this->maxProcesses = $maxProcesses;
 	}
+
+    /**
+     * @param bool $preserveFinishedProcesses
+     */
+    public function setPreserveFinishedProcesses($preserveFinishedProcesses)
+    {
+        $this->preserveFinishedProcesses = $preserveFinishedProcesses;
+    }
 
 	/**
 	 * @param Process $process
@@ -103,7 +114,9 @@ class Dispatcher
 			// if one is finished, move to finishedProcesses
 			if ($runningProc->isFinished()) {
 				$finishedProcIds[] = $key;
-				$this->finishedProcesses[] = $runningProc;
+				if ($this->preserveFinishedProcesses) {
+				    $this->finishedProcesses[] = $runningProc;
+                }
 				$this->finishedProcessesWithOutput[] = $runningProc;
 			}
 		}
