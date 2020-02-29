@@ -64,19 +64,13 @@ class Dispatcher
 		$this->checkAndRemoveFinishedProcessesFromStack();
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function hasProcessesInQueue()
-	{
+	public function hasProcessesInQueue(): bool
+    {
 		return count($this->processQueue) > 0;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function hasRunningProcesses()
-	{
+	public function hasRunningProcesses(): bool
+    {
 		return count($this->runningProcesses) > 0;
 	}
 
@@ -84,14 +78,11 @@ class Dispatcher
 	/**
 	 * @return Process[]
 	 */
-	public function getFinishedProcesses()
-	{
+	public function getFinishedProcesses(): array
+    {
 		return $this->finishedProcesses;
 	}
 
-	/**
-	 *
-	 */
 	protected function checkAndRemoveFinishedProcessesFromStack()
 	{
 		// check all running processes if they are still running,
@@ -110,9 +101,6 @@ class Dispatcher
 		}
 	}
 
-	/**
-	 *
-	 */
 	protected function fillRunningStackAndStartJobs()
 	{
 		while ($this->hasProcessesInQueue() && count($this->runningProcesses) < $this->maxProcesses) {
@@ -137,5 +125,4 @@ class Dispatcher
 	{
 		$this->dispatch();
 	}
-
 }
