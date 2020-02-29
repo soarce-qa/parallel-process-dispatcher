@@ -13,6 +13,12 @@ class Dispatcher
 	/** @var Process[] */
 	private $finishedProcesses = [];
 
+	/** @var Process[] */
+    private $finishedProcessesWithOutput = [];
+
+    /** @var bool if set to false, finished processes will not be moved to "finishedProcesses* stack. */
+    private $preserveFinishedProcesses = true;
+
 	/** @var int number of maximum parallel running processes */
 	private $maxProcesses = 2;
 
@@ -24,13 +30,21 @@ class Dispatcher
 		$this->maxProcesses = $maxProcesses;
 	}
 
+    /**
+     * @param bool $preserveFinishedProcesses
+     */
+    public function setPreserveFinishedProcesses($preserveFinishedProcesses)
+    {
+        $this->preserveFinishedProcesses = $preserveFinishedProcesses;
+    }
+
 	/**
 	 * @param Process $process
 	 * @param boolean $start if $start is true, after pushing the process to the queue, the running-processes-stack is checked for finished jobs and new
 	 *                       ones will be taken from the queue until the maximum is reached.
 	 */
 	public function addProcess(Process $process, $start = false)
-	{
+    {
 		$this->processQueue[] = $process;
 
 		if ($start) {
@@ -44,7 +58,7 @@ class Dispatcher
 	 * @param int $checkIntervalMicroseconds
 	 */
 	public function dispatch($checkIntervalMicroseconds = 1000)
-	{
+    {
 		while ($this->hasProcessesInQueue() || $this->hasRunningProcesses()) {
 			$this->fillRunningStackAndStartJobs();
 			usleep($checkIntervalMicroseconds / 2);
@@ -58,7 +72,7 @@ class Dispatcher
 	 * and start more jobs if others had finished.
 	 */
 	public function tick()
-	{
+    {
 		$this->checkAndRemoveFinishedProcessesFromStack();
 		$this->fillRunningStackAndStartJobs();
 		$this->checkAndRemoveFinishedProcessesFromStack();
@@ -73,7 +87,6 @@ class Dispatcher
     {
 		return count($this->runningProcesses) > 0;
 	}
-
 
 	/**
 	 * @return Process[]
@@ -91,7 +104,10 @@ class Dispatcher
 			// if one is finished, move to finishedProcesses
 			if ($runningProc->isFinished()) {
 				$finishedProcIds[] = $key;
-				$this->finishedProcesses[] = $runningProc;
+				if ($this->preserveFinishedProcesses) {
+				    $this->finishedProcesses[] = $runningProc;
+                }
+				$this->finishedProcessesWithOutput[] = $runningProc;
 			}
 		}
 
@@ -117,6 +133,21 @@ class Dispatcher
 			usleep (100);
 		}
 	}
+
+    /**
+     * @return \Generator|Process[]
+     */
+	public function getProcessesWithPendingOutput()
+    {
+        while ($this->finishedProcessesWithOutput !== []) {
+            yield array_shift($this->finishedProcessesWithOutput);
+        }
+        foreach ($this->runningProcesses as $process) {
+            if (($process instanceof ProcessLineOutput) && $process->hasNextOutput()) {
+                yield $process;
+            }
+        }
+    }
 
 	/**
 	 * This lets the running processes finish after the main program went through.
