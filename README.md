@@ -1,4 +1,4 @@
-# parallel-process-dispatcher [![Build Status](https://travis-ci.com/fastbill/parallel-process-dispatcher.svg?branch=master)](https://travis-ci.com/fastbill/parallel-process-dispatcher) [![Packagist](https://img.shields.io/packagist/dt/fastbill/parallel-process-dispatcher.svg)](https://packagist.org/packages/fastbill/parallel-process-dispatcher)
+# soarce/parallel-process-dispatcher [![Build Status](https://travis-ci.com/soarce/parallel-process-dispatcher.svg?branch=master)](https://travis-ci.com/soarce/parallel-process-dispatcher) [![Packagist](https://img.shields.io/packagist/dt/soarce/parallel-process-dispatcher.svg)](https://packagist.org/packages/soarce/parallel-process-dispatcher)
 
 This micro-library has two classes. One encapsulates a (linux commandline) process into an object and allows asynchronous running without deadlocks. 
 The other is a multi-process-dispatcher which takes an arbitrary number of beforementioned processes and runs them simultaneously (with a maximum number of concurrent processes).
@@ -13,10 +13,10 @@ The other is a multi-process-dispatcher which takes an arbitrary number of befor
 ### Installation:
 
 Add the following to your `composer.json`:
-```js
+```json
 {
     "require": {
-        "fastbill/parallel-process-dispatcher": "*"
+        "soarce/parallel-process-dispatcher": "*"
     }
 }
 ```
@@ -24,7 +24,7 @@ Add the following to your `composer.json`:
 or just run the following command in your project root directory
 
 ```sh
-$ composer require "fastbill/parallel-process-dispatcher"
+$ composer require "soarce/parallel-process-dispatcher"
 ```
 
 ## Usage

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpdox xmlns="http://xml.phpdox.net/config">
-<project name="fastbill/parallel-process-dispatcher" source="${basedir}/../src" workdir="${basedir}/phpdox">
+<project name="soarce/parallel-process-dispatcher" source="${basedir}/../src" workdir="${basedir}/phpdox">
     <collector publiconly="false" backend="parser">
     </collector>
 
