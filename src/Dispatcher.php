@@ -1,6 +1,6 @@
 <?php
 
-namespace FastBill\ParallelProcessDispatcher;
+namespace Soarce\ParallelProcessDispatcher;
 
 class Dispatcher
 {
