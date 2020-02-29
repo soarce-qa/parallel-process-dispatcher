@@ -1,13 +1,11 @@
 <?php
 
-namespace FastBill\ParallelProcessDispatcher;
+namespace Soarce\ParallelProcessDispatcher;
 
 /**
  * Class Process
  *
  * represents a process (commandline-call) for multithreading. wraps popen(), inspired bei jakub-onderka/parallel-lint
- *
- * @package FastBill\TraceAnalyzer
  */
 class Process
 {
