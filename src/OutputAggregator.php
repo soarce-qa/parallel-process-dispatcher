@@ -1,6 +1,6 @@
 <?php
 
-namespace FastBill\ParallelProcessDispatcher;
+namespace Soarce\ParallelProcessDispatcher;
 
 class OutputAggregator {
 
@@ -12,7 +12,10 @@ class OutputAggregator {
         $this->dispatcher = $dispatcher;
     }
 
-    public function getOutput()
+    /**
+     * @return \Generator|string[]|null
+     */
+    public function getOutput(): ?\Generator
     {
         $this->dispatcher->tick();
 
@@ -23,7 +26,10 @@ class OutputAggregator {
         yield from $this->processOneIteration();
     }
 
-    private function processOneIteration()
+    /**
+     * @return \Generator|string[]|null
+     */
+    private function processOneIteration(): ?\Generator
     {
         foreach ($this->dispatcher->getProcessesWithPendingOutput() as $process) {
             if ($process instanceof ProcessLineOutput) {

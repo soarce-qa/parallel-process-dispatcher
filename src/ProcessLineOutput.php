@@ -1,9 +1,9 @@
 <?php
 
-namespace FastBill\ParallelProcessDispatcher;
+namespace Soarce\ParallelProcessDispatcher;
 
 /**
- * Class Process
+ * Class ProcessLineOutput
  *
  * represents a process (commandline-call) for multithreading. wraps popen(), inspired bei jakub-onderka/parallel-lint
  * This version is for reading output line by line while the job is running!
@@ -18,7 +18,7 @@ class ProcessLineOutput extends Process
 	/** @var string[] */
 	protected $output = [];
 
-    public function start($stdInInput = null)
+    public function start($stdInInput = null): void
     {
         parent::start($stdInInput);
 
@@ -27,11 +27,7 @@ class ProcessLineOutput extends Process
         $this->nonblockingMode = true;
     }
 
-
-    /**
-	 * @return bool
-	 */
-	public function isFinished()
+	public function isFinished(): bool
 	{
 		if ($this->statusCode !== null) {
 			return true;
@@ -68,27 +64,20 @@ class ProcessLineOutput extends Process
 	}
 
 	/**
-	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function getOutput()
-	{
+	public function getOutput(): string
+    {
 		throw new \RuntimeException('Cannot get output in total, use (get|has)NextOutput()');
 	}
 
-    /**
-     * @return bool
-     */
-	public function hasNextOutput()
+	public function hasNextOutput(): bool
     {
         $this->readOutputIntoArray();
         return count($this->output) > 0 || ($this->statusCode !== null && $this->remainder !== '');
     }
 
-    /**
-     * @return string
-     */
-    public function getNextOutput()
+    public function getNextOutput(): string
     {
         $this->readOutputIntoArray();
 
@@ -100,10 +89,7 @@ class ProcessLineOutput extends Process
         return array_shift($this->output);
     }
 
-    /**
-     * @return void
-     */
-    private function readOutputIntoArray()
+    private function readOutputIntoArray(): void
     {
         if ($this->statusCode !== null) {
             return;
