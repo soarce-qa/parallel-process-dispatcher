@@ -2,6 +2,8 @@
 
 namespace Soarce\ParallelProcessDispatcher;
 
+use RuntimeException;
+
 /**
  * Class Process
  *
@@ -32,21 +34,21 @@ class Process
 	protected $stderr;
 
 	/** @var string */
-	private $output = '';
+	protected $output = '';
 
 	/** @var string */
-	private $errorOutput = '';
+	protected $errorOutput = '';
 
 	/** @var int */
-	private $statusCode;
+	protected $statusCode;
 
 	/** @var string */
-	private $name;
+	protected $name;
 
 	/**
 	 * @param string $command
      * @param string $name
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function __construct($command, $name = '')
 	{
@@ -75,7 +77,7 @@ class Process
 		);
 
 		if ($this->process === false) {
-			throw new \RuntimeException("Cannot create new process {$this->command}");
+			throw new RuntimeException("Cannot create new process {$this->command}");
 		}
 
 		$stdin = $pipes[0];
@@ -131,36 +133,36 @@ class Process
 	}
 
 	/**
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function getOutput(): string
     {
 		if (!$this->isFinished()) {
-			throw new \RuntimeException("Cannot get output for running process");
+			throw new RuntimeException("Cannot get output for running process");
 		}
 
 		return $this->output;
 	}
 
 	/**
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function getErrorOutput(): string
     {
 		if (!$this->isFinished()) {
-			throw new \RuntimeException("Cannot get error output for running process");
+			throw new RuntimeException("Cannot get error output for running process");
 		}
 
 		return $this->errorOutput;
 	}
 
 	/**
-	 * @throws \RuntimeException
+	 * @throws RuntimeException
 	 */
 	public function getStatusCode(): int
     {
 		if (!$this->isFinished()) {
-			throw new \RuntimeException("Cannot get status code for running process");
+			throw new RuntimeException("Cannot get status code for running process");
 		}
 
 		return $this->statusCode;
