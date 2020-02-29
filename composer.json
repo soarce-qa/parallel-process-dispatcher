@@ -15,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Soarce\\ParallelProcessDispatcher\\": "src/"
+            "FastBill\\ParallelProcessDispatcher\\": "src/"
         }
     },
     "replace": {
