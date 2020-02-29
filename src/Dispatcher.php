@@ -29,8 +29,8 @@ class Dispatcher
 	 * @param boolean $start if $start is true, after pushing the process to the queue, the running-processes-stack is checked for finished jobs and new
 	 *                       ones will be taken from the queue until the maximum is reached.
 	 */
-	public function addProcess(Process $process, $start = false)
-	{
+	public function addProcess(Process $process, $start = false): void
+    {
 		$this->processQueue[] = $process;
 
 		if ($start) {
@@ -43,8 +43,8 @@ class Dispatcher
 	 * returns if all are through.
 	 * @param int $checkIntervalMicroseconds
 	 */
-	public function dispatch($checkIntervalMicroseconds = 1000)
-	{
+	public function dispatch($checkIntervalMicroseconds = 1000): void
+    {
 		while ($this->hasProcessesInQueue() || $this->hasRunningProcesses()) {
 			$this->fillRunningStackAndStartJobs();
 			usleep($checkIntervalMicroseconds / 2);
@@ -57,26 +57,20 @@ class Dispatcher
 	 * advances the queue without blocking - this can/should be run from time to time to flush buffers
 	 * and start more jobs if others had finished.
 	 */
-	public function tick()
-	{
+	public function tick(): void
+    {
 		$this->checkAndRemoveFinishedProcessesFromStack();
 		$this->fillRunningStackAndStartJobs();
 		$this->checkAndRemoveFinishedProcessesFromStack();
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function hasProcessesInQueue()
-	{
+	public function hasProcessesInQueue(): bool
+    {
 		return count($this->processQueue) > 0;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function hasRunningProcesses()
-	{
+	public function hasRunningProcesses(): bool
+    {
 		return count($this->runningProcesses) > 0;
 	}
 
@@ -84,16 +78,13 @@ class Dispatcher
 	/**
 	 * @return Process[]
 	 */
-	public function getFinishedProcesses()
-	{
+	public function getFinishedProcesses(): array
+    {
 		return $this->finishedProcesses;
 	}
 
-	/**
-	 *
-	 */
-	protected function checkAndRemoveFinishedProcessesFromStack()
-	{
+	protected function checkAndRemoveFinishedProcessesFromStack(): void
+    {
 		// check all running processes if they are still running,
 		$finishedProcIds = [];
 		foreach ($this->runningProcesses as $key => $runningProc) {
@@ -110,11 +101,8 @@ class Dispatcher
 		}
 	}
 
-	/**
-	 *
-	 */
-	protected function fillRunningStackAndStartJobs()
-	{
+	protected function fillRunningStackAndStartJobs(): void
+    {
 		while ($this->hasProcessesInQueue() && count($this->runningProcesses) < $this->maxProcesses) {
 			// get process from queue
 			/** @var Process $proc */
@@ -137,5 +125,4 @@ class Dispatcher
 	{
 		$this->dispatch();
 	}
-
 }

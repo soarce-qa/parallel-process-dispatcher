@@ -9,12 +9,12 @@ namespace Soarce\ParallelProcessDispatcher;
  */
 class Process
 {
-	const STDIN  = 0;
-	const STDOUT = 1;
-	const STDERR = 2;
+	public const STDIN  = 0;
+	public const STDOUT = 1;
+	public const STDERR = 2;
 
-	const READ  = 'r';
-	const WRITE = 'w';
+	public const READ  = 'r';
+	public const WRITE = 'w';
 
 	/** @var bool */
 	protected $nonblockingMode = false;
@@ -23,13 +23,13 @@ class Process
 	protected $command = '';
 
 	/** @var resource */
-	protected $process = null;
+	protected $process;
 
 	/** @var resource */
-	protected $stdout = null;
+	protected $stdout;
 
 	/** @var resource */
-	protected $stderr = null;
+	protected $stderr;
 
 	/** @var string */
 	private $output = '';
@@ -38,10 +38,10 @@ class Process
 	private $errorOutput = '';
 
 	/** @var int */
-	private $statusCode = null;
+	private $statusCode;
 
 	/** @var string */
-	private $name = '';
+	private $name;
 
 	/**
 	 * @param string $command
@@ -57,8 +57,8 @@ class Process
 	/**
 	 * @param string $stdInInput
 	 */
-	public function start($stdInInput = null)
-	{
+	public function start($stdInInput = null): void
+    {
 		$descriptors = [
 			self::STDIN  => array('pipe', self::READ),
 			self::STDOUT => array('pipe', self::WRITE),
@@ -89,12 +89,8 @@ class Process
 		fclose($stdin);
 	}
 
-
-	/**
-	 * @return bool
-	 */
-	public function isFinished()
-	{
+	public function isFinished(): bool
+    {
 		if ($this->statusCode !== null) {
 			return true;
 		}
@@ -110,7 +106,9 @@ class Process
 			$this->output      .= stream_get_contents($this->stdout);
 			$this->errorOutput .= stream_get_contents($this->stderr);
 			return false;
-		} elseif ($this->statusCode === null) {
+		}
+
+		if ($this->statusCode === null) {
 			$this->statusCode = (int) $status['exitcode'];
 		}
 
@@ -133,11 +131,10 @@ class Process
 	}
 
 	/**
-	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function getOutput()
-	{
+	public function getOutput(): string
+    {
 		if (!$this->isFinished()) {
 			throw new \RuntimeException("Cannot get output for running process");
 		}
@@ -146,11 +143,10 @@ class Process
 	}
 
 	/**
-	 * @return string
 	 * @throws \RuntimeException
 	 */
-	public function getErrorOutput()
-	{
+	public function getErrorOutput(): string
+    {
 		if (!$this->isFinished()) {
 			throw new \RuntimeException("Cannot get error output for running process");
 		}
@@ -159,11 +155,10 @@ class Process
 	}
 
 	/**
-	 * @return int
 	 * @throws \RuntimeException
 	 */
-	public function getStatusCode()
-	{
+	public function getStatusCode(): int
+    {
 		if (!$this->isFinished()) {
 			throw new \RuntimeException("Cannot get status code for running process");
 		}
@@ -171,28 +166,21 @@ class Process
 		return $this->statusCode;
 	}
 
-	/**
-	 * @return bool
-	 */
-	public function isFail()
-	{
+	public function isFail(): bool
+    {
 		return $this->getStatusCode() === 1;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function getName()
-	{
+	public function getName(): string
+    {
 		return $this->name;
 	}
 
 	/**
 	 * @param string $name
 	 */
-	public function setName($name = '')
-	{
+	public function setName($name = ''): void
+    {
 		$this->name = $name;
 	}
-
 }
