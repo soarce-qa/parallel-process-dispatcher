@@ -10,6 +10,7 @@
         }
     ],
     "readme": "README.md",
+    "abandoned": "soarce/parallel-process-dispatcher",
     "require": {
         "php": ">=5.6"
     },

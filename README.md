@@ -1,7 +1,10 @@
-# parallel-process-dispatcher [![Build Status](https://travis-ci.com/fastbill/parallel-process-dispatcher.svg?branch=master)](https://travis-ci.com/fastbill/parallel-process-dispatcher) [![Packagist](https://img.shields.io/packagist/dt/fastbill/parallel-process-dispatcher.svg)](https://packagist.org/packages/fastbill/parallel-process-dispatcher)
+# fastbill/parallel-process-dispatcher [![Build Status](https://travis-ci.com/fastbill/parallel-process-dispatcher.svg?branch=master)](https://travis-ci.com/fastbill/parallel-process-dispatcher) [![Packagist](https://img.shields.io/packagist/dt/fastbill/parallel-process-dispatcher.svg)](https://packagist.org/packages/fastbill/parallel-process-dispatcher)
 
 This micro-library has two classes. One encapsulates a (linux commandline) process into an object and allows asynchronous running without deadlocks. 
-The other is a multi-process-dispatcher which takes an arbitrary number of beforementioned processes and runs them simultaneously (with a maximum number of concurrent processes).
+The other is a multi-process-dispatcher which takes an arbitrary number of aforementioned processes and runs them simultaneously (with a maximum number of concurrent processes).
+
+## this package is abandoned
+please use "[soarce/parallel-process-dispatcher](https://github.com/soarce-qa/parallel-process-dispatcher)" instead to get further updates and features.
 
 ### Usage examples:
 * Dispatching long running cronjobs which e.g. mostly wait for webservice responses (you can run more processes than
@@ -13,7 +16,7 @@ The other is a multi-process-dispatcher which takes an arbitrary number of befor
 ### Installation:
 
 Add the following to your `composer.json`:
-```js
+```json
 {
     "require": {
         "fastbill/parallel-process-dispatcher": "*"
