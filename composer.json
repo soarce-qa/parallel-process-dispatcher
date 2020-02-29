@@ -1,22 +1,25 @@
 {
-    "name": "fastbill/parallel-process-dispatcher",
+    "name": "soarce/parallel-process-dispatcher",
     "description": "Tiny PHP library for running jobs in background and/or in parallel",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Holger Segnitz",
-            "email": "hsegnitz@fastbill.com"
+            "email": "holger@segnitz.net"
         }
     ],
     "readme": "README.md",
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.4,<8.0-DEV"
     },
     "autoload": {
         "psr-4": {
-            "FastBill\\ParallelProcessDispatcher\\": "src/"
+            "Soarce\\ParallelProcessDispatcher\\": "src/"
         }
+    },
+    "replace": {
+      "fastbill/parallel-process-dispatcher": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*",
