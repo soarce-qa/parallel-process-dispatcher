@@ -97,7 +97,27 @@ $processes = $dispatcher->getFinishedProcesses();
 ```
 
 
+#### Reading Output from multiple jobs while they are running
 
+A possible use case for this would be running multiple crawlers over separate slow(er) filesystems or websites to generate a list of
+certain download or backup worthy files while the main process keeps track of the list, eliminates duplicates and writes the backup.
+
+```php
+$dispatcher = new Dispatcher(2);
+
+$dispatcher->addProcess(new ProcessLineOutput("...", 'job1'));
+$dispatcher->addProcess(new ProcessLineOutput("...", 'job2'));
+$dispatcher->addProcess(new ProcessLineOutput("...", 'job3'));
+
+$oa = new OutputAggregator($dispatcher);
+foreach ($oa->getOutput() as $job => $line) {
+    echo $job, ': ', $line;
+}
+```
+
+The function `OutputAggregator::getOutput()` returns a Generator which returns the job's name (here job1-3) as key and the output
+line as value.
+Contrary to arrays, the key will with almost certain probability appear multiple times. 
 
 
 ## Known Issues
@@ -107,9 +127,11 @@ $processes = $dispatcher->getFinishedProcesses();
 * PHP Internals: Be aware that if the child process produces output, it will write into a buffer until the buffer is
 full. If the buffer is full the child pauses until the parent reads from the buffer and makes more room. This is done
 in the isFinished() method. The dispatcher calls this method periodically to prevent a deadlock. If you use the process
-class standalone, you have to possibilities to prevent this:
+class standalone, you have multiple possibilities to prevent this:
   * call isFinished() yourself in either a loop, using a tick function or otherwise during execution of your script
   * instead of writing to stdOut, divert output to a temporary file and use its name as output.
+  * use the combination of OutputAggregator and ProcessLineOutput and work on output as soon as it arrives. This
+    might consume a lot of RAM for buffers if your jobs generate a lot of output, so set high enough limits.
   
 ### Dispatcher
 
