@@ -15,15 +15,17 @@ class OutputAggregator {
     }
 
     /**
+     * @param  int $microseconds to sleep after an iteration over all running processes. This prevents 100% CPU usage
      * @return Generator|string[]|null
      */
-    public function getOutput()
+    public function getOutput($microseconds = 1000)
     {
         $this->dispatcher->tick();
 
         while ($this->dispatcher->hasRunningProcesses()) {
             $this->dispatcher->tick();
             yield from $this->processOneIteration();
+            usleep($microseconds);
         }
         yield from $this->processOneIteration();
     }
