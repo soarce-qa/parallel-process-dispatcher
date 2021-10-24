@@ -5,7 +5,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 /**
  * Static test suite.
  */
-class PhpQaGraphs_TestSuite extends PHPUnit_Framework_TestSuite
+class PhpQaGraphs_TestSuite extends \PHPUnit\Framework\TestSuite
 {
     /**
      * Constructor

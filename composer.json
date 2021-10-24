@@ -11,7 +11,7 @@
     ],
     "readme": "README.md",
     "require": {
-        "php": ">=7.1,<8.0-DEV"
+        "php": ">=7.4,<8.1-DEV"
     },
     "autoload": {
         "psr-4": {
@@ -23,12 +23,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "*",
-        "jakub-onderka/php-parallel-lint": "*",
         "phploc/phploc": "*",
         "pdepend/pdepend": "*",
         "phpmd/phpmd": "*",
         "squizlabs/php_codesniffer": "*",
         "sebastian/phpcpd": "*",
-        "theseer/phpdox": "*"
+        "theseer/phpdox": "*",
+        "php-parallel-lint/php-parallel-lint": "^1.3"
     }
 }

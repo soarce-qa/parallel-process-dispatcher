@@ -6,7 +6,7 @@ composer-install:
 	composer install --prefer-dist
 
 composer-install-nodev:
-	composer install --prefer-dist --nodev
+	composer install --prefer-dist --no-dev
 
 composer-autoload:
 	composer dump-autoload -o
@@ -22,7 +22,7 @@ lint:
 	vendor/bin/parallel-lint -j 4 --blame src tests
 
 phploc:
-	vendor/bin/phploc --count-tests --log-csv=./build/logs/phploc.csv --names="*.php,*.phtml" --log-xml=./build/logs/phploc.xml src tests
+	vendor/bin/phploc --count-tests --log-csv=./build/logs/phploc.csv --suffix .php --log-xml=./build/logs/phploc.xml src tests
 
 pdepend:
 	vendor/bin/pdepend --jdepend-xml=./build/logs/jdepend.xml --jdepend-chart=./build/pdepend/dependencies.svg --overview-pyramid=./build/pdepend/overview-pyramid.svg src,tests
@@ -48,6 +48,3 @@ phpdox:
 metrics: cleanup lint phploc pdepend phpmd phpcs phpcpd phpunit-nofail phpdox
 
 build: composer-install-nodev lint phpunit
-
-deploy: build composer-autoload
-	# something
