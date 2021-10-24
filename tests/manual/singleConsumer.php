@@ -1,6 +1,6 @@
 <?php
 
-use FastBill\ParallelProcessDispatcher\ProcessLineOutput;
+use Soarce\ParallelProcessDispatcher\ProcessLineOutput;
 
 include '../../src/Process.php';
 include '../../src/ProcessLineOutput.php';

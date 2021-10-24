@@ -1,9 +1,9 @@
 <?php
 
-use FastBill\ParallelProcessDispatcher\ProcessLineOutput;
-use FastBill\ParallelProcessDispatcher\Process;
-use FastBill\ParallelProcessDispatcher\Dispatcher;
-use FastBill\ParallelProcessDispatcher\OutputAggregator;
+use Soarce\ParallelProcessDispatcher\ProcessLineOutput;
+use Soarce\ParallelProcessDispatcher\Process;
+use Soarce\ParallelProcessDispatcher\Dispatcher;
+use Soarce\ParallelProcessDispatcher\OutputAggregator;
 
 include '../../src/Process.php';
 include '../../src/ProcessLineOutput.php';
