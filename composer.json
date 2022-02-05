@@ -11,7 +11,7 @@
     ],
     "readme": "README.md",
     "require": {
-        "php": ">=7.4,<8.1-DEV"
+        "php": ">=8.0,<8.2-DEV"
     },
     "autoload": {
         "psr-4": {
