@@ -19,21 +19,17 @@ class Dispatcher
     /** @var bool if set to false, finished processes will not be moved to "finishedProcesses* stack. */
     private $preserveFinishedProcesses = true;
 
-	/** @var int number of maximum parallel running processes */
-	private $maxProcesses = 2;
-
-	public function __construct($maxProcesses = 2)
+	public function __construct(private int $maxProcesses = 2)
 	{
 		if ($maxProcesses < 1) {
 			throw new \InvalidArgumentException('number of processes must be at least 1');
 		}
-		$this->maxProcesses = $maxProcesses;
 	}
 
     /**
      * @param bool $preserveFinishedProcesses
      */
-    public function setPreserveFinishedProcesses($preserveFinishedProcesses): void
+    public function setPreserveFinishedProcesses(bool $preserveFinishedProcesses): void
     {
         $this->preserveFinishedProcesses = $preserveFinishedProcesses;
     }
@@ -43,7 +39,7 @@ class Dispatcher
 	 * @param boolean $start if $start is true, after pushing the process to the queue, the running-processes-stack is checked for finished jobs and new
 	 *                       ones will be taken from the queue until the maximum is reached.
 	 */
-	public function addProcess(Process $process, $start = false): void
+	public function addProcess(Process $process, bool $start = false): void
     {
 		$this->processQueue[] = $process;
 
@@ -57,7 +53,7 @@ class Dispatcher
 	 * returns if all are through.
 	 * @param int $checkIntervalMicroseconds
 	 */
-	public function dispatch($checkIntervalMicroseconds = 1000): void
+	public function dispatch(int $checkIntervalMicroseconds = 1000): void
     {
 		while ($this->hasProcessesInQueue() || $this->hasRunningProcesses()) {
 			$this->fillRunningStackAndStartJobs();
