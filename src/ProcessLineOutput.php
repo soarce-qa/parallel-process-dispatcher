@@ -12,13 +12,12 @@ namespace Soarce\ParallelProcessDispatcher;
  */
 class ProcessLineOutput extends Process
 {
-    /** @var string */
-    protected $remainder = '';
+    protected string $remainder = '';
 
 	/** @var string[] */
 	protected $output = [];
 
-    public function start($stdInInput = null): void
+    public function start(string $stdInInput = null): void
     {
         parent::start($stdInInput);
 
@@ -81,7 +80,7 @@ class ProcessLineOutput extends Process
     {
         $this->readOutputIntoArray();
 
-        if ($this->output === [] && $this->remainder !== '' ) {
+        if ($this->output === [] && $this->remainder !== '') {
             $remainder = $this->remainder;
             $this->remainder = '';
             return $remainder;

@@ -21,9 +21,6 @@ class Process
 	/** @var bool */
 	protected $nonblockingMode = false;
 
-	/** @var string */
-	protected $command = '';
-
 	/** @var resource */
 	protected $process;
 
@@ -42,24 +39,18 @@ class Process
 	/** @var int */
 	protected $statusCode;
 
-	/** @var string */
-	protected $name;
-
 	/**
 	 * @param string $command
      * @param string $name
 	 * @throws RuntimeException
 	 */
-	public function __construct($command, $name = '')
-	{
-		$this->command = $command;
-		$this->name = $name;
-	}
+	public function __construct(protected string $command, protected string $name = '')
+	{}
 
 	/**
-	 * @param string $stdInInput
+	 * @param ?string $stdInInput
 	 */
-	public function start($stdInInput = null): void
+	public function start(?string $stdInInput = null): void
     {
 		$descriptors = [
 			self::STDIN  => array('pipe', self::READ),

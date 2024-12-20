@@ -3,14 +3,8 @@
 namespace Soarce\ParallelProcessDispatcher;
 
 class OutputAggregator {
-
-    /** @var Dispatcher */
-    private $dispatcher;
-
-    public function __construct(Dispatcher $dispatcher)
-    {
-        $this->dispatcher = $dispatcher;
-    }
+    public function __construct(private Dispatcher $dispatcher)
+    {}
 
     /**
      * @param  int $microseconds to sleep after an iteration over all running processes. This prevents 100% CPU usage
