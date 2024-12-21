@@ -17,7 +17,7 @@ class ProcessLineOutput extends Process
 	/** @var string[] */
 	protected $output = [];
 
-    public function start(string $stdInInput = null): void
+    public function start(?string $stdInInput = null): void
     {
         parent::start($stdInInput);
 

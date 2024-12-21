@@ -130,10 +130,7 @@ class Dispatcher
 		}
 	}
 
-    /**
-     * @return \Generator|Process[]
-     */
-	public function getProcessesWithPendingOutput()
+	public function getProcessesWithPendingOutput(): \Generator
     {
         while ($this->finishedProcessesWithOutput !== []) {
             yield array_shift($this->finishedProcessesWithOutput);
